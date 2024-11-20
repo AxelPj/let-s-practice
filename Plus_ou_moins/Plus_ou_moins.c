@@ -6,7 +6,7 @@
 /*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:31:45 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/11/19 16:47:30 by axelpeti         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:04:33 by axelpeti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-int main (void)
+int main(void) 
 {
 	int Nombre_trouve;
 	int nb_coup;
@@ -22,28 +22,42 @@ int main (void)
 
 	nb_coup = 1;
 	Nombre_trouve = 0;
+	srand(time(NULL));
 	Nombre_Mystere = (rand() % (100 - 1 + 1)) + 1;
-	printf("Bienvenue dans le jeu du Plus ou moins\nJe vais tirer un chiffre au hasard entre 1 et 100 a toi de le deviner\n");
-	srand (time(NULL));
-	printf("\ndevine le nombre : ");
-	scanf("%i", &Nombre_trouve);
-	while (Nombre_trouve != Nombre_Mystere)
+
+	printf("Bienvenue dans le jeu du Plus ou moins\n");
+	printf("Je vais tirer un chiffre au hasard entre 1 et 100, à toi de le deviner\n");
+	while (1) 
 	{
+		printf("Devine le nombre : ");
+		if (scanf("%d", &Nombre_trouve) != 1) // verifie que l'on donne bien un nombre
+		{
+			printf("Ce n'est pas un nombre valide. Essaie encore.\n");
+			while (getchar() != '\n');  // Vide le buffer
+		} 
+		else
+			break;
+	}
+	while (Nombre_trouve != Nombre_Mystere) 
+	{
+		nb_coup++;
+
 		if (Nombre_trouve < Nombre_Mystere)
+			printf("C'est Plus, réessaye\n");
+		else
+			printf("C'est Moins, réessaye\n");
+		while (1) 
 		{
-			printf("C'est Plus reesaye\n");
-			scanf("%i", &Nombre_trouve);
-			nb_coup++;
-		}
-		else if (Nombre_trouve > Nombre_Mystere)
-		{
-			printf("C'est Moins reesaye\n");                                     
-			scanf("%i", &Nombre_trouve);
-			nb_coup++;
+			printf("Devine le nombre : ");
+			if (scanf("%d", &Nombre_trouve) != 1) 
+			{
+				printf("Ce n'est pas un nombre valide. Essaie encore.\n");
+				while (getchar() != '\n');
+			} 
+			else 
+				break;
 		}
 	}
-	if (nb_coup >= 10)
-    	printf("Tu as trouvé en %i coups. Mieux vaut tard que jamais !\n", nb_coup);
-	printf("Bravo tu a trouve le nombre en %i coup\n", nb_coup);
-	return (0);
+	printf("Bravo, tu as trouvé le nombre en %d coups\n", nb_coup);
+	return 0;
 }
