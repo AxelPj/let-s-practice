@@ -19,7 +19,7 @@ Le projet actuel est un jeu intitulé **Plus ou Moins**. C'est un jeu interactif
 ### Installation
 1. Clone ce dépôt sur ton ordinateur :
     ```bash
-    git clone https://github.com/ton-utilisateur/let-s-practice.git
+    git clone https://github.com/AxelPj/let-s-practice.git
     ```
 2. Navigue vers le répertoire du projet :
     ```bash
