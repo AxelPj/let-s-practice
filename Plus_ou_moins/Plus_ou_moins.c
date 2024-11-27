@@ -6,31 +6,30 @@
 /*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 15:31:45 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/11/20 12:04:33 by axelpeti         ###   ########.fr       */
+/*   Updated: 2024/11/27 10:43:11 by axelpeti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <time.h>
-# include <stdio.h>
-# include <stdlib.h>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int main(void) 
+int	main(void)
 {
-	int Nombre_trouve;
-	int nb_coup;
-	int Nombre_Mystere;
+	int	Nombre_trouve;
+	int	nb_coup;
+	int	Nombre_Mystere;
 
 	nb_coup = 1;
 	Nombre_trouve = 0;
 	srand(time(NULL));
 	Nombre_Mystere = (rand() % (100 - 1 + 1)) + 1;
-
 	printf("Bienvenue dans le jeu du Plus ou moins\n");
 	printf("Je vais tirer un chiffre au hasard entre 1 et 100, à toi de le deviner\n");
 	while (1) 
 	{
 		printf("Devine le nombre : ");
-		if (scanf("%d", &Nombre_trouve) != 1) // verifie que l'on donne bien un nombre
+		if (scanf("%d", &Nombre_trouve) != 1 || Nombre_trouve > 100 || Nombre_trouve < 1) // verifie que l'on donne bien un nombre
 		{
 			printf("Ce n'est pas un nombre valide. Essaie encore.\n");
 			while (getchar() != '\n');  // Vide le buffer
@@ -41,7 +40,6 @@ int main(void)
 	while (Nombre_trouve != Nombre_Mystere) 
 	{
 		nb_coup++;
-
 		if (Nombre_trouve < Nombre_Mystere)
 			printf("C'est Plus, réessaye\n");
 		else
@@ -49,7 +47,7 @@ int main(void)
 		while (1) 
 		{
 			printf("Devine le nombre : ");
-			if (scanf("%d", &Nombre_trouve) != 1) 
+			if (scanf("%d", &Nombre_trouve) != 1 || Nombre_trouve > 100 || Nombre_trouve < 1)
 			{
 				printf("Ce n'est pas un nombre valide. Essaie encore.\n");
 				while (getchar() != '\n');
