@@ -38,12 +38,12 @@ cd lets-practice
 
 # Compilez le programme avec gcc (assurez-vous d'avoir un compilateur C installé) :
 ```
-gcc -o plus_ou_moins Plus_ou_moins_v2.c
+make
 ```
 
 # Exécutez le jeu :
 ```
-./plus_ou_moins
+./Game
 ```
 
 Ce projet fait partie de mon parcours pour m'entraîner à la programmation en C. J'espère qu'il pourra aussi aider d'autres personnes qui veulent apprendre ou améliorer leurs compétences en C.
