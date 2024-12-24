@@ -6,7 +6,7 @@
 /*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:19:55 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/12/17 14:05:50 by axelpeti         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:03:01 by axelpeti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <time.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
+#  define BUFFER_SIZE 4
 # endif
 
 void	*ft_calloc(int nmemb, int size);

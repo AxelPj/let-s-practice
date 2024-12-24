@@ -6,7 +6,7 @@
 /*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:51:30 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/12/17 15:02:26 by axelpeti         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:07:09 by axelpeti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_lvl1()
 	int		nb_coup;
 	int		nombre_mystere;
 
-	nb_coup = 1;
+	nb_coup = 0;
 	nombre_trouve = 0;
 	srand(time(NULL));
 	nombre_mystere = (rand() % (100 - 1 + 1)) + 1;
@@ -85,7 +85,7 @@ void	ft_lvl3()
 	int		nb_coup;
 	int		nombre_mystere;
 
-	nb_coup = 1;
+	nb_coup = 0;
 	nombre_trouve = 0;
 	srand(time(NULL));
 	nombre_mystere = (rand() % (10000 - 1 + 1)) + 1;
