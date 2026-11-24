@@ -17,9 +17,6 @@ SRC = 	Plus_ou_moins_v2.c \
 # Fichiers objets compilés
 OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
 
-# Créer le dossier build si nécessaire
-$(shell mkdir -p $(OBJ_DIR))
-
 # Cible par défaut : créer la bibliothèque et l'exécutable
 all: $(NAME) $(EXEC)
 
@@ -29,7 +26,8 @@ $(NAME): $(OBJ)
 	@ranlib $(NAME)
 
 # Règle pour compiler les fichiers .c en .o dans le dossier build
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c Plus_ou_moins_v2.h
+	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Cible pour créer l'exécutable en liant avec la bibliothèque statique
@@ -38,8 +36,8 @@ $(EXEC): $(OBJ) $(NAME)
 
 # Nettoyage des fichiers objets
 clean:
-	@rm -f $(OBJ) $(EXEC) $(NAME)
-	$(shell rm -rf $(OBJ_DIR))
+	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
 
 # Nettoyage complet : objets et bibliothèque
 fclean: clean
@@ -47,3 +45,5 @@ fclean: clean
 
 # Rebuild : nettoyage et compilation complète
 re: fclean all
+
+.PHONY: all clean fclean re

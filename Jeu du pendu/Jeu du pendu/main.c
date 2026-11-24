@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/03 14:31:26 by axelpeti          #+#    #+#             */
-/*   Updated: 2025/01/09 16:08:45 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "pendu.h"
 
 int main(void)
@@ -21,9 +9,10 @@ int main(void)
 		clear_screen();
 		print_title();
 		user = menu();
+		if (!user)
+			return (-1);
 		if (user[0] == '1' && user[1] == '\n')
 		{
-			free(user);
 			clear_screen();
 			jeu();
 		}
@@ -34,8 +23,10 @@ int main(void)
 		}
 		if (user[0] == '3' && user[1] == '\n')
 		{
+			free(user);
 			clear_screen();
 			return (0);
 		}
+		free(user);
 	}
 }

@@ -1,0 +1,11 @@
+# Fichiers objets et bibliothèques compilés
+*.o
+*.a
+build/
+
+# En-têtes précompilés
+*.gch
+
+# Exécutables
+a.out
+Game

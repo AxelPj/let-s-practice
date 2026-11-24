@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Plus_ou_moins_v2.h                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 10:19:55 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/12/19 17:03:01 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PLUS_OU_MOINS_V2_H
 # define PLUS_OU_MOINS_V2_H
 
@@ -21,13 +9,13 @@
 # include <time.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4
+#  define BUFFER_SIZE 64
 # endif
 
-void	*ft_calloc(int nmemb, int size);
-int		ft_verifnb(char *buf);
-void	ft_lvl1();
-void	ft_lvl2();
-void	ft_lvl3();
+void	*my_calloc(int nmemb, int size);
+int		my_verifnb(char *buf);
+void	my_lvl1();
+void	my_lvl2();
+void	my_lvl3();
 
 #endif

@@ -1,24 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   game_utils.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/18 15:48:15 by axelpeti          #+#    #+#             */
-/*   Updated: 2025/01/11 15:08:21 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "pendu.h"
 
 int	count_word (int fd)
 {
-	int count_word;
-	
+	int		count_word;
+	char	*line;
+
 	count_word = 0;
-	while (get_next_line(fd) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
 		count_word++;
+		free(line);
+		line = get_next_line(fd);
+	}
 	return (count_word);
 }
 
@@ -27,29 +21,40 @@ char	*pick_word(int fd)
 	int		count;
 	int		nb_word;
 	char	*word;
+	char	*line;
 
 	srand(time(NULL));
-	nb_word = (rand() % (count_word(fd) + 1 - 1)) + 1;
+	nb_word = count_word(fd);
 	close (fd);
+	if (nb_word == 0)
+		return (NULL);
+	nb_word = rand() % nb_word;
 	fd = open("mots_pendu.txt", O_RDONLY);
+	if (fd < 0)
+		return (NULL);
 	count = 0;
-	while (count <= nb_word)
+	word = NULL;
+	line = get_next_line(fd); // on lit tout le fichier pour vider le stash de get_next_line
+	while (line != NULL)
 	{
-		get_next_line(fd);
+		if (count == nb_word)
+			word = line;
+		else
+			free(line);
 		count++;
+		line = get_next_line(fd);
 	}
-	word = ft_calloc(ft_strlen(get_next_line(fd)), sizeof(char));
-	if (!word)
-		return ("no word");
-	word = get_next_line(fd);
 	close (fd);
+	if (word && word[my_strlen(word) - 1] == '\n')
+		word[my_strlen(word) - 1] = '\0';
 	return (word);
 }
 
-void center_text(char *text) 
+void center_text(char *text)
 {
     struct winsize ws;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws);  // Obtenir la taille du terminal
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == -1)  // Obtenir la taille du terminal
+		ws.ws_col = 0;
     int term_width;  // Largeur du terminal
     int text_length; // Longueur du texte
     int spaces;  // Calculer le nombre d'espaces à ajouter avant le texte
@@ -57,7 +62,7 @@ void center_text(char *text)
 
 	i = 0;
 	term_width = ws.ws_col;
-	text_length = ft_strlen(text);
+	text_length = my_strlen(text);
 	spaces = (term_width - text_length) / 2;
     while (i < spaces) 
 	{
@@ -73,7 +78,7 @@ void clear_screen()
     printf("\033[H");
 }
 
-int	ft_isalpha(int c)
+int	my_isalpha(int c)
 {
 	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
 		return (1);
@@ -127,8 +132,10 @@ char	*hidden_word(char *word_to_find)
 	int		i;
 
 	i = 0;
-	hide_word = ft_calloc(ft_strlen(word_to_find), sizeof(char));
-	while (i < ft_strlen(word_to_find) - 1)
+	hide_word = my_calloc(my_strlen(word_to_find) + 1, sizeof(char));
+	if (!hide_word)
+		return (NULL);
+	while (i < my_strlen(word_to_find))
 	{
 		hide_word[i] = '*';
 		i++;

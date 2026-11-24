@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ex_1.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 13:42:55 by axelpeti          #+#    #+#             */
-/*   Updated: 2025/01/15 15:30:53 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -35,7 +23,9 @@ Element *init()
 	
 	if (t_node == NULL || element == NULL)
     {
-        return ;
+        free(t_node);
+        free(element);
+        return (NULL);
     }
 	t_node->content = 10;
 	t_node->next = NULL;
@@ -56,8 +46,36 @@ void	create_node(Element *element, int nv_nb)
 	element->premier = new;
 }
 
-void display_list ()
+void	display_list(Element *element)
+{
+	T_node	*actuel;
+
+	actuel = element->premier;
+	while (actuel != NULL)
+	{
+		printf("%d -> ", actuel->content);
+		actuel = actuel->next;
+	}
+	printf("NULL\n");
+}
+
 int main ()
 {
-	
+	Element	*element;
+	T_node	*tmp;
+
+	element = init();
+	if (element == NULL)
+		return (1);
+	create_node(element, 20);
+	create_node(element, 30);
+	display_list(element);
+	while (element->premier != NULL)
+	{
+		tmp = element->premier;
+		element->premier = tmp->next;
+		free(tmp);
+	}
+	free(element);
+	return (0);
 }

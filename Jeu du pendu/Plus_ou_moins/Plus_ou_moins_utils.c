@@ -1,25 +1,13 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Plus_ou_moins_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 10:48:25 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/12/17 13:40:14 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Plus_ou_moins_v2.h"
 
-int	ft_verifnb(char *buf)
+int	my_verifnb(char *buf)
 {
 	int	i;
 
 	i = 0;
 	while (buf[i])
 	{
-		if (buf[i] < '0' && buf[i] > '9')
+		if ((buf[i] < '0' || buf[i] > '9') && buf[i] != '\n')
 		{
 			return (1);
 		}
@@ -28,7 +16,7 @@ int	ft_verifnb(char *buf)
 	return (0);
 }
 
-void	*ft_calloc(int nmemb, int size)
+void	*my_calloc(int nmemb, int size)
 {
 	void			*tab;
 	size_t			total_size;

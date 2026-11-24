@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pendu.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 10:19:55 by axelpeti          #+#    #+#             */
-/*   Updated: 2025/01/13 13:37:41 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PENDU_H
 # define PENDU_H
 # define RESET   "\033[0m"
@@ -30,11 +18,11 @@
 # include <fcntl.h>
 # include <time.h>
 
-int		ft_strlen(char *s);
-void	*ft_calloc(int nmemb, int size);
-char	*ft_strjoin(char *s1, char *s2);
-int		ft_strchr(char *s, int c);
-char	*ft_strdup(char *s);
+int		my_strlen(char *s);
+void	*my_calloc(int nmemb, int size);
+char	*my_strjoin(char *s1, char *s2);
+int		my_strchr(char *s, int c);
+char	*my_strdup(char *s);
 char	*readline(int fd, char *stach);
 char	*recoveraftern(char *stach);
 char	*recoverbeforen(char *line);
@@ -50,7 +38,7 @@ char	*menu(void);
 void	clear_screen();
 void	move_cursor(int x, int y);
 void	menu_game(int x);
-int		ft_isalpha(int c);
+int		my_isalpha(int c);
 char	*find_letter(char l, char *word_to_find, char *his_word);
 void	jeu();
 char	*hidden_word(char *word_to_find);

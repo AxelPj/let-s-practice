@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Hangman.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 15:35:04 by axelpeti          #+#    #+#             */
-/*   Updated: 2025/01/13 13:58:34 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "pendu.h"
 #include "menu_game.h"
 
@@ -20,20 +8,26 @@ void	jeu()
 	char	*words_to_find;
 	int		fd;
 	char	(*rendu)[1000];
-	char	(*drawing)[27];
-	int hanged;
-	int p;
+	int		hanged;
+	int		p;
+
 	hanged = 0;
-	if (! rendu)
-		return;
 	fd = open("mots_pendu.txt", O_RDONLY);
 	words_to_find = pick_word(fd); // cherche le futur mots a trouver pseudo aleatoirement
-	attempt = ft_calloc(BUFFER_SIZE, sizeof(char)); // calloc de ce que l'utilisateur va ecrire
-	rendu = ft_calloc(9, ft_strlen(words_to_find) * 12);
-	drawing = ft_calloc(9, 28); // calloc de mon futur tableaux ascii
-	words_to_find = pick_word(fd);
+	if (!words_to_find)
+		return ;
+	attempt = my_calloc(BUFFER_SIZE, sizeof(char)); // calloc de ce que l'utilisateur va ecrire
+	rendu = my_calloc(10, sizeof(*rendu)); // 10 lignes de 1000 caracteres pour le mot en ascii
 	hide_word = hidden_word(words_to_find);
-	while (check(hide_word) || hanged <= 10)
+	if (!attempt || !rendu || !hide_word)
+	{
+		free(attempt);
+		free(rendu);
+		free(hide_word);
+		free(words_to_find);
+		return ;
+	}
+	while (check(hide_word) && hanged < NUM_ERROR - 1)
 	{
 		p = 0;
 		clear_screen();
@@ -47,9 +41,12 @@ void	jeu()
 		center_text(pendu[hanged]);
 		printf("\n\nmots a trouver : %s\n", hide_word);
 		move_cursor(141, 26);
-		fgets(attempt, BUFFER_SIZE, stdin);
-		if (ft_isalpha(attempt[0]) && attempt[1] == '\n')
+		if (fgets(attempt, BUFFER_SIZE, stdin) == NULL)
+			break ;
+		if (my_isalpha(attempt[0]) && attempt[1] == '\n')
 		{
+			if (attempt[0] >= 'A' && attempt[0] <= 'Z')
+				attempt[0] = attempt[0] + 32;
 			if (verif(words_to_find, attempt[0]) == 0)
 				hide_word = find_letter(attempt[0], words_to_find, hide_word);
 			else
@@ -59,8 +56,22 @@ void	jeu()
 			}
 		}
 		else
-			write (1, "entree incorect\n", 17);
+			write (1, "entree incorect\n", 16);
 	}
+	clear_screen();
+	print_title();
+	menu_letter(hide_word, rendu);
+	center_text(pendu[hanged]);
+	if (check(hide_word) == 0)
+		printf("\n\nbravo, tu as trouve le mot : %s\n", words_to_find);
+	else
+		printf("\n\nperdu, le mot etait : %s\n", words_to_find);
+	printf("appuie sur entree pour revenir au menu ");
+	fgets(attempt, BUFFER_SIZE, stdin);
+	free(attempt);
+	free(rendu);
+	free(hide_word);
+	free(words_to_find);
 }
 
 
@@ -72,7 +83,6 @@ void menu_letter(char *hide_word, char (*rendu)[1000])
 	int				j;
 	unsigned int	index;
 	int				line;
-	int				y;
     c = 0;
     i = 0;
 	l = 0;

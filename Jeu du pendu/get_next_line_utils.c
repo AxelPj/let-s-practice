@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 10:19:22 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/12/18 16:19:16 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "pendu.h"
 
-void	*ft_calloc(int nmemb, int size)
+void	*my_calloc(int nmemb, int size)
 {
 	void			*tab;
 	size_t			total_size;
@@ -35,7 +23,7 @@ void	*ft_calloc(int nmemb, int size)
 	return (tab);
 }
 
-int	ft_strlen(char *s)
+int	my_strlen(char *s)
 {
 	size_t	i;
 
@@ -47,7 +35,7 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*my_strjoin(char *s1, char *s2)
 {
 	char	*s;
 	size_t	i;
@@ -57,7 +45,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	k = 0;
 	j = 0;
 	i = 0;
-	s = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	s = (char *)malloc((my_strlen(s1) + my_strlen(s2) + 1) * sizeof(char));
 	if (!s)
 		return (NULL);
 	while (s1 && s1[i])
@@ -68,13 +56,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (free(s1), s);
 }
 
-char	*ft_strdup(char *s)
+char	*my_strdup(char *s)
 {
 	char	*dest;
 	size_t	i;
 
 	i = 0;
-	dest = (char *) malloc((ft_strlen(s) + 1) * sizeof(char));
+	dest = (char *) malloc((my_strlen(s) + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
 	while (s[i])
@@ -86,7 +74,7 @@ char	*ft_strdup(char *s)
 	return (dest);
 }
 
-int	ft_strchr(char *s, int c)
+int	my_strchr(char *s, int c)
 {
 	int	i;
 

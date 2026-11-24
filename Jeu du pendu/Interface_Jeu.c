@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Interface_Jeu.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 15:35:04 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/12/23 16:30:50 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "pendu.h"
 /* 
 void	Game(char *the_word)
@@ -21,7 +9,7 @@ void	Game(char *the_word)
 		" |____|"
 	};
 	
-	nb_letter = ft_strlen(the_word) - 1;
+	nb_letter = my_strlen(the_word) - 1;
 	top_lines();
 	
 } */

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Interface_menu.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/20 11:20:59 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/12/23 16:14:16 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "pendu.h"
 #include <string.h>
 
@@ -83,6 +71,8 @@ char    *menu(void)
         "===========================================    ",
     };
     choice = malloc(BUFFER_SIZE + 1);
+    if (!choice)
+        return (NULL);
     total_lines = sizeof(menu_lines) / sizeof(menu_lines[0]);
 	i = 0;
 	while (i < total_lines)
@@ -92,7 +82,12 @@ char    *menu(void)
 	}
     move_cursor(134, total_lines + 12); // position x (134) pour centrer
     printf("Entrez votre choix : ");
-    fgets(choice, BUFFER_SIZE, stdin);
+    if (fgets(choice, BUFFER_SIZE, stdin) == NULL) // fin de l'entree : on quitte
+    {
+        choice[0] = '3';
+        choice[1] = '\n';
+        choice[2] = '\0';
+    }
     return(choice);
 }
 

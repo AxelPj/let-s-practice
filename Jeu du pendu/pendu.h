@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pendu.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: axelpeti <axelpeti@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 10:19:55 by axelpeti          #+#    #+#             */
-/*   Updated: 2024/12/23 16:13:02 by axelpeti         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PENDU_H
 # define PENDU_H
 # define RESET   "\033[0m"
@@ -30,11 +18,11 @@
 # include <fcntl.h>
 # include <time.h>
 
-int		ft_strlen(char *s);
-void	*ft_calloc(int nmemb, int size);
-char	*ft_strjoin(char *s1, char *s2);
-int		ft_strchr(char *s, int c);
-char	*ft_strdup(char *s);
+int		my_strlen(char *s);
+void	*my_calloc(int nmemb, int size);
+char	*my_strjoin(char *s1, char *s2);
+int		my_strchr(char *s, int c);
+char	*my_strdup(char *s);
 char	*readline(int fd, char *stach);
 char	*recoveraftern(char *stach);
 char	*recoverbeforen(char *line);
