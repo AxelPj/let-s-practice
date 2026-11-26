@@ -15,11 +15,13 @@ Bienvenue dans mon repository **Let's Practice** ! Ce dépôt rassemble des peti
 
 Chaque projet est écrit en C, sans bibliothèque externe, avec uniquement la bibliothèque standard et les appels système (`read`, `write`, `open`, `ioctl`). Certaines fonctions classiques sont recodées à la main et préfixées par `my_` (`my_calloc`, `my_strlen`, `my_strjoin`, `my_strdup`, `my_strchr`, `my_isalpha`).
 
-Le **Plus ou Moins** se compile avec un Makefile qui produit une bibliothèque statique (`libPlus_ou_moins.a`) et l'exécutable `Game`. Le **Jeu du pendu** n'a pas de Makefile pour l'instant et se compile directement avec `gcc`.
+Le **Plus ou Moins** se compile avec un Makefile qui produit une bibliothèque statique (`libPlus_ou_moins.a`) et l'exécutable `Game`. Le **Jeu du pendu** se compile avec son propre Makefile, qui produit l'exécutable `pendu`.
 
 ## Fonctionnalités
 
 ### 1. Jeu du Plus ou Moins (`Plus_ou_moins/`)
+
+![Partie du jeu du Plus ou Moins](Plus_ou_moins/screenshots/partie.png)
 
 - Titre en art ASCII affiché en couleur au lancement.
 - Menu de choix du niveau :
@@ -36,18 +38,20 @@ Le **Plus ou Moins** se compile avec un Makefile qui produit une bibliothèque s
 
 ### 2. Jeu du pendu (`Jeu du pendu/`)
 
+| Menu principal | Partie en cours |
+| :---: | :---: |
+| ![Menu du jeu du pendu](Jeu%20du%20pendu/screenshots/menu.png) | ![Partie en cours du jeu du pendu](Jeu%20du%20pendu/screenshots/partie.png) |
+
 - Titre « HANGMAN » et menu en art ASCII, centrés selon la largeur du terminal (`ioctl` + `TIOCGWINSZ`).
 - Menu à trois choix : **1. Start**, **2. Settings** (pas encore implémenté), **3. Exit**.
-- Mot choisi au hasard parmi les 100 mots du fichier `mots_pendu.txt`, lu ligne par ligne avec `get_next_line`.
+- Mot choisi au hasard parmi les 100 mots du fichier `data/mots_pendu.txt`, lu ligne par ligne avec `get_next_line`.
 - Le mot est affiché masqué avec des `*`, puis chaque bonne lettre est révélée à toutes ses positions.
 - Le joueur propose une lettre à la fois (minuscule ou majuscule) ; une entrée invalide affiche « entree incorect ».
-- Chaque mauvaise lettre fait avancer le dessin du pendu (étapes définies dans `tab_ascii.c`).
+- Chaque mauvaise lettre fait avancer le dessin du pendu (étapes définies dans `src/ui/tab_ascii.c`).
 - La partie se termine quand le mot est trouvé (« bravo ») ou à la 9ᵉ erreur (« perdu », avec le mot à trouver), puis Entrée ramène au menu.
 - Les lettres du mot sont dessinées en grandes lettres ASCII.
 
-La version la plus récente se trouve dans `Jeu du pendu/Jeu du pendu/`. Les fichiers directement dans `Jeu du pendu/` sont une version plus ancienne (menu et cadre de jeu seulement).
-
-### 3. Exercice sur les listes chaînées (`Jeu du pendu/liste chaine exercice/`)
+### 3. Exercice sur les listes chaînées (`liste chaine exercice/`)
 
 - Définition d'une structure de nœud (`T_node`) et d'une structure de liste (`Element`).
 - `init` : crée une liste avec un premier élément.
@@ -55,7 +59,7 @@ La version la plus récente se trouve dans `Jeu du pendu/Jeu du pendu/`. Les fic
 - `display_list` : affiche la liste (`30 -> 20 -> 10 -> NULL`).
 
 ```sh
-gcc -Wall -Wextra -Werror "Jeu du pendu/liste chaine exercice/ex_1.c" -o liste
+gcc -Wall -Wextra -Werror "liste chaine exercice/ex_1.c" -o liste
 ./liste
 ```
 
@@ -86,9 +90,11 @@ make re       # nettoie puis recompile tout
 ### Jeu du pendu
 
 ```sh
-cd "Jeu du pendu/Jeu du pendu"
-gcc -Wall -Wextra *.c -o pendu
+cd "Jeu du pendu"
+make
 ```
+
+Autres règles disponibles : `make run` (compile puis lance le jeu), `make clean`, `make fclean`, `make re`.
 
 ## Utilisation
 
@@ -127,10 +133,10 @@ gcc -Wall -Wextra Plus_ou_moins.c -o plus_ou_moins_v1
 
 ### Jeu du pendu
 
-Le programme doit être lancé depuis son dossier, car il ouvre `mots_pendu.txt` avec un chemin relatif :
+Le programme doit être lancé depuis son dossier, car il ouvre `data/mots_pendu.txt` avec un chemin relatif :
 
 ```sh
-cd "Jeu du pendu/Jeu du pendu"
+cd "Jeu du pendu"
 ./pendu
 ```
 
@@ -148,7 +154,7 @@ int main(void)
     int     fd;
     char    *line;
 
-    fd = open("mots_pendu.txt", O_RDONLY);
+    fd = open("data/mots_pendu.txt", O_RDONLY);
     line = get_next_line(fd);
     printf("Premier mot : %sLongueur : %d\n", line, my_strlen(line));
     free(line);
@@ -168,20 +174,21 @@ int main(void)
 - `Plus_ou_moins/Plus_ou_moins_utils.c` : fonctions utilitaires `my_calloc` et `my_verifnb`.
 - `Plus_ou_moins/Plus_ou_moins.c` : première version du jeu, autonome, avec `scanf`.
 - `Plus_ou_moins/flemme.c` : petit programme qui affiche les nombres de 1 à 100.
-- `Jeu du pendu/Jeu du pendu/main.c` : boucle principale et gestion du menu.
-- `Jeu du pendu/Jeu du pendu/Hangman.c` : déroulement d'une partie (`jeu`) et affichage du mot en lettres ASCII (`menu_letter`).
-- `Jeu du pendu/Jeu du pendu/game_utils.c` : tirage du mot, centrage du texte, effacement de l'écran, masquage et révélation des lettres.
-- `Jeu du pendu/Jeu du pendu/Interface_menu.c` : affichage du titre, du menu et déplacement du curseur.
-- `Jeu du pendu/Jeu du pendu/tab_ascii.c` : tableaux des lettres ASCII et des étapes du dessin du pendu.
-- `Jeu du pendu/Jeu du pendu/get_next_line.c` : lecture d'un fichier ligne par ligne.
-- `Jeu du pendu/Jeu du pendu/get_next_line_utils.c` : fonctions `my_calloc`, `my_strlen`, `my_strjoin`, `my_strdup`, `my_strchr` utilisées par `get_next_line`.
-- `Jeu du pendu/Jeu du pendu/pendu.h` : couleurs, `BUFFER_SIZE` et prototypes du jeu.
-- `Jeu du pendu/Jeu du pendu/menu_game.h` : déclarations des tableaux ASCII.
-- `Jeu du pendu/Jeu du pendu/mots_pendu.txt` : liste des 100 mots à deviner.
-- `Jeu du pendu/Jeu du pendu/.Alphabet_Ascii_art` : alphabet en art ASCII utilisé comme modèle.
-- `Jeu du pendu/game.c`, `game_utils.c`, `Interface_menu.c`, `Interface_Jeu.c`, `get_next_line*.c`, `pendu.h` : ancienne version du pendu (menu et cadre de jeu).
-- `Jeu du pendu/Plus_ou_moins/` : copie du dossier `Plus_ou_moins/`.
-- `Jeu du pendu/liste chaine exercice/ex_1.c` : exercice sur les listes chaînées.
+- `Plus_ou_moins/screenshots/` : capture d'écran utilisée dans ce README.
+- `Jeu du pendu/Makefile` : règles `all`, `run`, `clean`, `fclean`, `re`.
+- `Jeu du pendu/src/main.c` : boucle principale et gestion du menu.
+- `Jeu du pendu/src/game/Hangman.c` : déroulement d'une partie (`jeu`) et affichage du mot en lettres ASCII (`menu_letter`).
+- `Jeu du pendu/src/game/game_utils.c` : tirage du mot, centrage du texte, effacement de l'écran, masquage et révélation des lettres.
+- `Jeu du pendu/src/ui/Interface_menu.c` : affichage du titre, du menu et déplacement du curseur.
+- `Jeu du pendu/src/ui/tab_ascii.c` : tableaux des lettres ASCII et des étapes du dessin du pendu.
+- `Jeu du pendu/src/utils/get_next_line.c` : lecture d'un fichier ligne par ligne.
+- `Jeu du pendu/src/utils/get_next_line_utils.c` : fonctions `my_calloc`, `my_strlen`, `my_strjoin`, `my_strdup`, `my_strchr` utilisées par `get_next_line`.
+- `Jeu du pendu/include/pendu.h` : couleurs, `BUFFER_SIZE` et prototypes du jeu.
+- `Jeu du pendu/include/menu_game.h` : déclarations des tableaux ASCII.
+- `Jeu du pendu/data/mots_pendu.txt` : liste des 100 mots à deviner.
+- `Jeu du pendu/data/.Alphabet_Ascii_art` : alphabet en art ASCII utilisé comme modèle.
+- `Jeu du pendu/screenshots/` : captures d'écran utilisées dans ce README.
+- `liste chaine exercice/ex_1.c` : exercice sur les listes chaînées.
 
 ## Contributions
 
@@ -193,4 +200,4 @@ Les contributions sont les bienvenues ! Pour proposer une modification :
 4. Pousser : `git push origin feature/nouvelle-fonctionnalite`
 5. Ouvrir une Pull Request.
 
-> ⚠️ **Le projet n'est pas terminé.** Le Jeu du pendu (menu « Settings », règles du jeu, Makefile) et l'exercice sur les listes chaînées sont encore en cours de développement.
+> ⚠️ **Le projet n'est pas terminé.** Le Jeu du pendu (menu « Settings », règles du jeu) et l'exercice sur les listes chaînées sont encore en cours de développement.

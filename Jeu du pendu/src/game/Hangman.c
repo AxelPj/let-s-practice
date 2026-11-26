@@ -12,7 +12,7 @@ void	jeu()
 	int		p;
 
 	hanged = 0;
-	fd = open("mots_pendu.txt", O_RDONLY);
+	fd = open("data/mots_pendu.txt", O_RDONLY);
 	words_to_find = pick_word(fd); // cherche le futur mots a trouver pseudo aleatoirement
 	if (!words_to_find)
 		return ;

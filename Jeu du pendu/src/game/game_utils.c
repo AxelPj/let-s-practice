@@ -29,7 +29,7 @@ char	*pick_word(int fd)
 	if (nb_word == 0)
 		return (NULL);
 	nb_word = rand() % nb_word;
-	fd = open("mots_pendu.txt", O_RDONLY);
+	fd = open("data/mots_pendu.txt", O_RDONLY);
 	if (fd < 0)
 		return (NULL);
 	count = 0;
